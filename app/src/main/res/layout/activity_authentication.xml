@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".Activities.LoginActivity">
+
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/phone_frg_img"
+        />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/auth_design"
+        />
+    <EditText
+        android:visibility="visible"
+        android:id="@+id/phone_frg_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginStart="40dp"
+        android:hint="Phone Number"
+        android:layout_above="@id/next"
+        />
+
+    <Button
+        android:visibility="visible"
+        android:id="@+id/next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginStart="40dp"
+        android:text="Send OTP"
+        android:textAllCaps="false"
+        />
+
+    <Button
+        android:visibility="gone"
+        android:id="@+id/resend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginStart="40dp"
+        android:text="Resend OTP"
+        android:textAllCaps="false"
+
+        />
+
+    <EditText
+        android:visibility="gone"
+        android:id="@+id/otp_frg_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginStart="40dp"
+        android:hint="OTP"
+        android:layout_above="@id/verify"
+        />
+
+    <Button
+        android:visibility="gone"
+        android:id="@+id/verify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginStart="40dp"
+        android:text="Next"
+        android:textAllCaps="false"
+
+        />
+
+
+
+</RelativeLayout>

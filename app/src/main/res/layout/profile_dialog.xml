@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:layout_gravity="center">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:id="@+id/profile_img_dialog"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFF"
+            android:text=" "
+            android:textSize="25sp"
+
+            android:gravity="center"
+            android:id="@+id/popname"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_baseline_thumb_up_24"
+            android:layout_gravity="center"
+            android:tint="@color/colorCoolBlue"
+            android:layout_marginStart="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:textColor="#fff"
+            android:text=" "
+
+            android:layout_gravity="center"
+            android:layout_marginStart="7dp"
+            android:textSize="23sp"
+            android:id="@+id/total_likes_dialog"/>
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="250dp"
+        android:layout_height="73dp"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/status_dialog"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Status"
+            android:textColor="#fff"
+
+            android:textSize="15sp"
+             />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:layout_weight="2"
+        android:padding="5dp"
+        >
+        <ImageButton
+            android:id="@+id/add_as_friend"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:tint="@color/purple"
+            android:background="@color/colorCoolBlue"
+            android:src="@drawable/ic_baseline_person_add_24"
+            />
+        <ImageButton
+            android:id="@+id/send_msg_dialog"
+            android:tint="@color/colorCoolBlue"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/purple"
+            android:src="@drawable/ic_baseline_send_24"
+            />
+    </LinearLayout>
+
+
+
+
+
+
+
+</LinearLayout>
