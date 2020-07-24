@@ -50,10 +50,10 @@ public class MyReferences {
     }
 
     @NotNull
-    public static DatabaseReference privateChatRef(String chatId) {
+    public static DatabaseReference privateChatRef() {
         return FirebaseDatabase.getInstance().getReference(USER_DB)
                 .child(Controller.CurrentUser.getUID())
-                .child(INBOX_DB).child(chatId);
+                .child(INBOX_DB);
     }
 
     @NotNull
@@ -73,13 +73,6 @@ public class MyReferences {
         return FirebaseDatabase.getInstance().getReference(USER_DB)
                 .child(Controller.CurrentUser.getUID())
                 .child(FRIEND_REQ_DB);
-    }
-
-    @NotNull
-    public static DatabaseReference inboxRef() {
-        return FirebaseDatabase.getInstance().getReference(USER_DB)
-                .child(Controller.CurrentUser.getUID())
-                .child(INBOX_DB);
     }
 
     @NotNull
