@@ -21,6 +21,7 @@ public class MyReferences {
     private static final String FRIEND_REQ_DB = "Friend_Requests";
     private static final String INBOX_DB = "Inbox";
     private static final String Likes = "Likes";
+    private static final String ALL_INBOX = "all_Inbox";
 
     @NotNull
     public static DatabaseReference nickNameRef() {
@@ -53,6 +54,11 @@ public class MyReferences {
         return FirebaseDatabase.getInstance().getReference(USER_DB)
                 .child(Controller.CurrentUser.getUID())
                 .child(INBOX_DB).child(chatId);
+    }
+
+    @NotNull
+    public static DatabaseReference allPrivateChat() {
+        return FirebaseDatabase.getInstance().getReference(ALL_INBOX);
     }
 
     @NotNull
