@@ -145,3 +145,5 @@ public class ChooseNicknameActivity extends AppCompatActivity {
         });
     }
 }
+
+// hello world
