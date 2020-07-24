@@ -141,7 +141,7 @@ public class ChooseNicknameActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                AppHelper.showToast(ChooseNicknameActivity.this,error.getMessage());
+                AppHelper.showToast(ChooseNicknameActivity.this,error.toString());
             }
         });
     }
