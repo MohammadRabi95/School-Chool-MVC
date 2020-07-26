@@ -40,6 +40,7 @@ public class FriendRequestActivity extends AppCompatActivity {
                 LinearLayoutManager.VERTICAL, false));
         FriendRequestAdapter adapter = new FriendRequestAdapter(mList, this);
         recyclerView.setAdapter(adapter);
+        AppHelper.showToast(this,"hello");
     }
 
     @Override
