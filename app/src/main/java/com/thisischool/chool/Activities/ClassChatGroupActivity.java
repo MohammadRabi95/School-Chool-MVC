@@ -133,7 +133,8 @@ public class ClassChatGroupActivity extends AppCompatActivity implements View.On
                 finish();
                 break;
             case R.id.questions_menu_cgc:
-
+                startActivity(new Intent(this, FriendRequestActivity.class));
+                finish();
                 break;
         }
     }
@@ -164,9 +165,6 @@ public class ClassChatGroupActivity extends AppCompatActivity implements View.On
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
-                Log.e(TAG, "onCancelled: ", error.toException());
-                AppHelper.showToast(ClassChatGroupActivity.this, error.getMessage());
             }
         });
     }

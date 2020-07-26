@@ -24,6 +24,7 @@ import com.squareup.picasso.Picasso;
 import com.thisischool.chool.BuildConfig;
 import com.thisischool.chool.Classes.AppHelper;
 import com.thisischool.chool.Classes.Controller;
+import com.thisischool.chool.Models.FriendRequest;
 import com.thisischool.chool.OnlineDatabase.MyReferences;
 import com.thisischool.chool.OnlineDatabase.SendNotification;
 import com.thisischool.chool.Models.ClassChatGroupMessage;
@@ -138,13 +139,21 @@ public class ClassChatGroupAdapter extends RecyclerView.Adapter<ClassChatGroupAd
                         if (!NO_IMAGE.equals(mUser.getProfileImage())) {
                             Picasso.get().load(mUser.getProfileImage()).noPlaceholder().fit().centerCrop().into(imageView);
                         }
-                        likeCount.setText(mUser.getTotalLikes());
+                        likeCount.setText(mUser.getTotalLikes() + "");
                         status.setText(mUser.getStatus());
 
                         sendFriendRequest.setOnClickListener(view -> {
-                            SendNotification.friendRequestNotification(context,
-                                    Controller.CurrentUser.getUserNickname(context),
-                                    mUser.getDeviceToken());
+                            DatabaseReference ref = MyReferences.friendsRequestRef();
+                            String pid = ref.push().getKey();
+                            FriendRequest friendRequest = new FriendRequest(userId,pid);
+                            ref.child(pid).setValue(friendRequest)
+                            .addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    SendNotification.friendRequestNotification(context,
+                                            Controller.CurrentUser.getUserNickname(context),
+                                            mUser.getDeviceToken());
+                                }
+                            });
                         });
                         sendMessage.setOnClickListener(view -> {
 

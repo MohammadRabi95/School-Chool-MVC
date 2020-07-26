@@ -64,10 +64,10 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
                                                 .fit().centerCrop().into(holder.profileImage);
                                     }
                                     holder.accept.setOnClickListener(view -> {
-                                        acceptRequest(user,position);
+                                        acceptRequest(user,position,friendRequest.getReqId());
                                     });
                                     holder.reject.setOnClickListener(view -> {
-                                        rejectRequest(friendRequest.getSenderId(), position);
+                                        rejectRequest(friendRequest.getReqId(), position);
                                     });
                                 }
                             }
@@ -100,11 +100,11 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
         }
     }
 
-    private void acceptRequest(@NotNull User user, int position) {
+    private void acceptRequest(@NotNull User user, int position, String id) {
         Friends friends = new Friends(user.getId());
         MyReferences.friendsRef().child(user.getId())
                 .setValue(friends).addOnCompleteListener(task -> {
-                    MyReferences.friendsRequestRef().child(user.getId())
+                    MyReferences.friendsRequestRef().child(id)
                             .removeValue().addOnCompleteListener(task1 -> {
                        notifyItemRemoved(position);
                         SendNotification.friendRequestAcceptedNotification(context,
@@ -113,13 +113,10 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
                 });
     }
 
-    private void rejectRequest(String senderID, int position) {
-            MyReferences.friendsRequestRef().child(senderID).removeValue()
+    private void rejectRequest(String id, int position) {
+            MyReferences.friendsRequestRef().child(id).removeValue()
             .addOnCompleteListener(task -> {
-                MyReferences.friendsRequestRef().child(senderID)
-                        .removeValue().addOnCompleteListener(task1 -> {
                     notifyItemRemoved(position);
-                });
     });
     }
 }
