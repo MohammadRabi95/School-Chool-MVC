@@ -38,7 +38,7 @@ import static com.thisischool.chool.Classes.Constants.DEFAULT_STATUS;
 public class ChooseNicknameActivity extends AppCompatActivity {
 
     private static final String TAG = "ChooseNicknameActivity";
-    private EditText nicknameEdit;
+    private EditText nicknameEdit, classIdEdit;
     private String classId = "";
 
     @Override
@@ -49,6 +49,7 @@ public class ChooseNicknameActivity extends AppCompatActivity {
         checkClassStrengthAndGetClassId();
 
         nicknameEdit = findViewById(R.id.chooseNickname_frg_edit);
+        classIdEdit = findViewById(R.id.classid_frg_edit);
 
         findViewById(R.id.ok).setOnClickListener(view1 -> {
             if (nicknameEdit.getText().toString().isEmpty()) {
@@ -74,6 +75,15 @@ public class ChooseNicknameActivity extends AppCompatActivity {
                             String deviceToken = FirebaseInstanceId.getInstance().getToken();
                             String phone = Objects.requireNonNull(FirebaseAuth.getInstance()
                                     .getCurrentUser()).getPhoneNumber();
+                            if (!"".equals(classIdEdit.getText().toString())) {
+                                if (classIdEdit.getText().toString().length() > 7) {
+                                    classId = classIdEdit.getText().toString().trim();
+                                } else {
+                                    classIdEdit.setError("Invalid Code");
+                                    classIdEdit.requestFocus();
+                                    return;
+                                }
+                            }
                             User user = new User(phone, nick, classId, deviceToken,
                                     Constants.NO_IMAGE, DEFAULT_STATUS, 0,
                                     Controller.CurrentUser.getUID());

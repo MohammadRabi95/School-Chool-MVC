@@ -293,7 +293,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private boolean validatePhoneNumber() {
         String phoneNumber = phoneEdit.getText().toString();
         if (TextUtils.isEmpty(phoneNumber)) {
-            phoneEdit.setError("Invalid phone number.");
+            phoneEdit.setError("Invalid Phone Number.");
             return false;
         }
 
