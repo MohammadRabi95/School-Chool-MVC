@@ -217,7 +217,7 @@ public class ClassChatGroupAdapter extends RecyclerView.Adapter<ClassChatGroupAd
                     DrawableCompat.wrap(like.getDrawable()),
                     ContextCompat.getColor(context, R.color.colorThinBlue)
             );
-            MyReferences.likedMessageRef(context, messageId).removeValue()
+            MyReferences.likedMessageRef(context, messageId).child(senderId).removeValue()
                     .addOnCompleteListener(task -> {
                         MyReferences.otherUserInfoRef(senderId)
                                 .addListenerForSingleValueEvent(new ValueEventListener() {

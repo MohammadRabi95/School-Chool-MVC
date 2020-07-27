@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.Light.NoActionBar">
-        <activity android:name=".Activities.AddWorkBookActivity"></activity>
+        <activity android:name=".Activities.AddWorkBookActivity"/>
         <activity android:name=".Activities.ChooseNicknameActivity" />
         <activity android:name=".Activities.WorkBookActivity" />
         <activity android:name=".Activities.FriendRequestActivity" />
@@ -28,11 +28,18 @@
         <activity android:name=".Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".Activities.ClassChatGroupActivity" />
+
+        <service
+            android:name=".OnlineDatabase.MyNotificationService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

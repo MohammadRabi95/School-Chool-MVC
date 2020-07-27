@@ -64,7 +64,7 @@ public class AddWorkBookActivity extends AppCompatActivity {
                 workBook_.setContent(content);
                 workBook_.setTitle(title);
                 workBook_.setId(workBook.getId());
-                databaseHelper.workBookDao().insertWorkBook(workBook_);
+                databaseHelper.workBookDao().updateWorkBook(workBook_);
                 finish();
                 break;
         }

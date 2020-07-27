@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
 
-        FirebaseAuth.getInstance().signOut();
+        //FirebaseAuth.getInstance().signOut();
 
         otpCodeEdit = findViewById(R.id.otp_frg_edit);
         phoneEdit = findViewById(R.id.phone_frg_edit);
