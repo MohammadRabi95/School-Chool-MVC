@@ -4,7 +4,8 @@ public class Constants {
 
     public static final String CLICK_ACTION = "action_click";
     public static final int TO_CLASS_CHAT_GROUP = 0;
-    public static final int FRIEND_REQUEST = 1;
+    public static final int TO_FRIEND_REQUEST = 1;
+    public static final int TO_INBOX = 2;
     public static final String NO_IMAGE = "default";
     public static final String CLASS_GROUP_MESSAGE = "classGroupMessage";
     public static final String PRIVATE_MESSAGE = "privateMessage";

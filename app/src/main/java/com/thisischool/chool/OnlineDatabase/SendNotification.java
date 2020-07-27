@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.thisischool.chool.Classes.Constants.CLICK_ACTION;
-import static com.thisischool.chool.Classes.Constants.FRIEND_REQUEST;
+import static com.thisischool.chool.Classes.Constants.TO_FRIEND_REQUEST;
 
 public class SendNotification {
 
@@ -137,7 +137,7 @@ public class SendNotification {
             JSONObject notificationObj = new JSONObject();
             notificationObj.put("title", "New Friend Request");
             notificationObj.put("body", body);
-            notificationObj.put(CLICK_ACTION,FRIEND_REQUEST);
+            notificationObj.put(CLICK_ACTION, TO_FRIEND_REQUEST);
             json.put("notification", notificationObj);
 
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, URL,
@@ -171,7 +171,7 @@ public class SendNotification {
             JSONObject notificationObj = new JSONObject();
             notificationObj.put("title", "Friend Request Accepted!");
             notificationObj.put("body", body);
-            notificationObj.put(CLICK_ACTION,FRIEND_REQUEST);
+            notificationObj.put(CLICK_ACTION, TO_FRIEND_REQUEST);
             json.put("notification", notificationObj);
 
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, URL,

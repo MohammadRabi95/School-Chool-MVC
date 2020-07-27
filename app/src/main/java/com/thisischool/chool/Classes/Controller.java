@@ -8,6 +8,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class Controller {
 
     public static class CurrentUser {
@@ -31,7 +33,7 @@ public class Controller {
 
 
         public static String getUserPhone() {
-            return FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
+            return Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getPhoneNumber();
         }
 
         public static void setUserNickname(@NotNull Context context, String Nickname) {
@@ -50,7 +52,7 @@ public class Controller {
         @NotNull
         @Contract(pure = true)
         public static String getUID() {
-            return FirebaseAuth.getInstance().getCurrentUser().getUid();
+            return Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
         }
     }
 }
