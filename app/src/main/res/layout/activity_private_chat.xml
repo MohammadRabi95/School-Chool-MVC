@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.PrivateChatActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/upper_layout"
+        android:orientation="horizontal"
+        >
+
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/ProfileImageMessageActivityId"
+            android:layout_gravity="center"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="center"
+            android:id="@+id/UsernameMessageActivityId"
+            android:layout_marginLeft="25dp"
+            android:layout_marginStart="25dp"
+            />
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/pc_recyclerview"
+        android:layout_below="@id/upper_layout"
+        android:layout_above="@id/opened_menu_pc"
+        />
+
+    <LinearLayout
+        android:id="@+id/pc_linear"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:background="#e2e2e2"
+        android:weightSum="10"
+        >
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:hint="Write"
+            android:paddingStart="10dp"
+            android:background="@drawable/msg_edit_background"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="5dp"
+            android:id="@+id/msgEdit_pc"
+            />
+
+        <ImageView
+            android:tint="@color/colorCoolBlue"
+            android:id="@+id/select_img_pc"
+            android:padding="5dp"
+            android:src="@drawable/ic_baseline_add_a_photo_24"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.2"
+            />
+        <ImageView
+            android:tint="@color/colorDarkBlue"
+            android:id="@+id/send_msg_pc"
+            android:padding="5dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.2"
+            android:src="@drawable/ic_baseline_send_24"
+            />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            />
+
+        <ImageView
+            android:tint="@color/colorAccent"
+            android:id="@+id/lesson_pc"
+            android:src="@drawable/ic_baseline_lens_24"
+            android:padding="5dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.2"
+            />
+        <ImageView
+            android:tint="@color/black"
+            android:id="@+id/menu_pc"
+            android:src="@drawable/ic_baseline_more_vert_24"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.9"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:id="@+id/opened_menu_pc"
+        android:layout_above="@id/pc_linear"
+        android:visibility="gone"
+        android:weightSum="5"
+        >
+        <ImageView
+            android:id="@+id/profile_menu_pc"
+            android:tint="@color/black"
+            android:src="@drawable/ic_baseline_more_vert_24"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            />
+        <ImageView
+            android:id="@+id/schoolChat_menu_pc"
+            android:tint="@color/black"
+            android:src="@drawable/ic_baseline_more_vert_24"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            />
+        <ImageView
+            android:id="@+id/classInfo_menu_pc"
+            android:tint="@color/black"
+            android:src="@drawable/ic_baseline_more_vert_24"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            />
+        <ImageView
+            android:id="@+id/notes_menu_pc"
+            android:tint="@color/black"
+            android:src="@drawable/ic_baseline_more_vert_24"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            />
+        <ImageView
+            android:id="@+id/questions_menu_pc"
+            android:tint="@color/black"
+            android:src="@drawable/ic_baseline_more_vert_24"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.thisischool.chool.BuildConfig;
@@ -136,11 +135,7 @@ public class ClassChatGroupAdapter extends RecyclerView.Adapter<ClassChatGroupAd
                         sendFriendRequest = dialog.findViewById(R.id.add_as_friend);
                         sendMessage = dialog.findViewById(R.id.send_msg_dialog);
 
-                        if (userId.equals(Controller.CurrentUser.getUID())) {
-                            sendFriendRequest.setVisibility(View.GONE);
-                            sendMessage.setVisibility(View.GONE);
-                        }
-
+                        System.out.println("======================================= " + mUser.getNickname());
                         if (!NO_IMAGE.equals(mUser.getProfileImage())) {
                             Picasso.get().load(mUser.getProfileImage()).noPlaceholder().fit().centerCrop().into(imageView);
                         }
@@ -148,10 +143,9 @@ public class ClassChatGroupAdapter extends RecyclerView.Adapter<ClassChatGroupAd
                         status.setText(mUser.getStatus());
 
                         sendFriendRequest.setOnClickListener(view -> {
-                            sendFriendRequest.setVisibility(View.GONE);
-                            DatabaseReference ref = MyReferences.sendFriendRef(userId);
+                            DatabaseReference ref = MyReferences.friendsRequestRef();
                             String pid = ref.push().getKey();
-                            FriendRequest friendRequest = new FriendRequest(Controller.CurrentUser.getUID(),pid);
+                            FriendRequest friendRequest = new FriendRequest(userId,pid);
                             ref.child(pid).setValue(friendRequest)
                             .addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {
@@ -162,24 +156,10 @@ public class ClassChatGroupAdapter extends RecyclerView.Adapter<ClassChatGroupAd
                             });
                         });
                         sendMessage.setOnClickListener(view -> {
-                            // Send Private message to Class mate...
+
                         });
 
-                        Query query = MyReferences.sendFriendRef(userId)
-                                .orderByChild("senderId").equalTo(Controller.CurrentUser.getUID());
-                        query.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if (snapshot.exists()) {
-                                    sendFriendRequest.setVisibility(View.GONE);
-                                }
-                                dialog.show();
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                            }
-                        });
+                        dialog.show();
                     }
                 }
             }
@@ -237,7 +217,7 @@ public class ClassChatGroupAdapter extends RecyclerView.Adapter<ClassChatGroupAd
                     DrawableCompat.wrap(like.getDrawable()),
                     ContextCompat.getColor(context, R.color.colorThinBlue)
             );
-            MyReferences.likedMessageRef(context, messageId).child(senderId).removeValue()
+            MyReferences.likedMessageRef(context, messageId).removeValue()
                     .addOnCompleteListener(task -> {
                         MyReferences.otherUserInfoRef(senderId)
                                 .addListenerForSingleValueEvent(new ValueEventListener() {
