@@ -59,10 +59,8 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
                                 user = snapshot.getValue(User.class);
                                 if (user != null) {
                                     holder.nickname.setText(user.getNickname());
-                                    if (!NO_IMAGE.equals(user.getProfileImage())) {
                                         Picasso.get().load(user.getProfileImage()).noPlaceholder()
                                                 .fit().centerCrop().into(holder.profileImage);
-                                    }
                                     holder.accept.setOnClickListener(view -> {
                                         acceptRequest(user,position,friendRequest.getReqId());
                                     });

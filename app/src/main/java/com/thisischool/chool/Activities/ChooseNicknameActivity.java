@@ -85,7 +85,7 @@ public class ChooseNicknameActivity extends AppCompatActivity {
                                 }
                             }
                             User user = new User(phone, nick, classId, deviceToken,
-                                    Constants.NO_IMAGE, DEFAULT_STATUS, 0,
+                                    Constants.DEFAULT_DP, DEFAULT_STATUS, 0,
                                     Controller.CurrentUser.getUID());
 
                             MyReferences.userInfoRef().setValue(user)

@@ -2,11 +2,12 @@ package com.thisischool.chool.Classes;
 
 public class Constants {
 
-    public static final String CLICK_ACTION = "action_click";
+    public static final String CLICK_ACTION = "notification_click";
     public static final int TO_CLASS_CHAT_GROUP = 0;
     public static final int TO_FRIEND_REQUEST = 1;
     public static final int TO_INBOX = 2;
     public static final String NO_IMAGE = "default";
+    public static final String DEFAULT_DP = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
     public static final String CLASS_GROUP_MESSAGE = "classGroupMessage";
     public static final String PRIVATE_MESSAGE = "privateMessage";
     public static final String WORKBOOK_TABLE = "work_book";

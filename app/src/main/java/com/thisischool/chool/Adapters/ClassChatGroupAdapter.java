@@ -2,7 +2,6 @@ package com.thisischool.chool.Adapters;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
@@ -20,9 +19,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-import com.thisischool.chool.Activities.PrivateChatActivity;
 import com.thisischool.chool.BuildConfig;
 import com.thisischool.chool.Classes.AppHelper;
 import com.thisischool.chool.Classes.Controller;
@@ -137,7 +136,11 @@ public class ClassChatGroupAdapter extends RecyclerView.Adapter<ClassChatGroupAd
                         sendFriendRequest = dialog.findViewById(R.id.add_as_friend);
                         sendMessage = dialog.findViewById(R.id.send_msg_dialog);
 
-                        System.out.println("======================================= " + mUser.getNickname());
+                        if (userId.equals(Controller.CurrentUser.getUID())) {
+                            sendFriendRequest.setVisibility(View.GONE);
+                            sendMessage.setVisibility(View.GONE);
+                        }
+
                         if (!NO_IMAGE.equals(mUser.getProfileImage())) {
                             Picasso.get().load(mUser.getProfileImage()).noPlaceholder().fit().centerCrop().into(imageView);
                         }
@@ -145,9 +148,10 @@ public class ClassChatGroupAdapter extends RecyclerView.Adapter<ClassChatGroupAd
                         status.setText(mUser.getStatus());
 
                         sendFriendRequest.setOnClickListener(view -> {
-                            DatabaseReference ref = MyReferences.friendsRequestRef();
+                            sendFriendRequest.setVisibility(View.GONE);
+                            DatabaseReference ref = MyReferences.sendFriendRef(userId);
                             String pid = ref.push().getKey();
-                            FriendRequest friendRequest = new FriendRequest(userId,pid);
+                            FriendRequest friendRequest = new FriendRequest(Controller.CurrentUser.getUID(),pid);
                             ref.child(pid).setValue(friendRequest)
                             .addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {
@@ -158,12 +162,24 @@ public class ClassChatGroupAdapter extends RecyclerView.Adapter<ClassChatGroupAd
                             });
                         });
                         sendMessage.setOnClickListener(view -> {
-                            Intent intent=new Intent(context, PrivateChatActivity.class);
-                            intent.putExtra("Receiver",mUser.getId());
-                            context.startActivity(intent);
+                            // Send Private message to Class mate...
                         });
 
-                        dialog.show();
+                        Query query = MyReferences.sendFriendRef(userId)
+                                .orderByChild("senderId").equalTo(Controller.CurrentUser.getUID());
+                        query.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if (snapshot.exists()) {
+                                    sendFriendRequest.setVisibility(View.GONE);
+                                }
+                                dialog.show();
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
                     }
                 }
             }
@@ -221,7 +237,7 @@ public class ClassChatGroupAdapter extends RecyclerView.Adapter<ClassChatGroupAd
                     DrawableCompat.wrap(like.getDrawable()),
                     ContextCompat.getColor(context, R.color.colorThinBlue)
             );
-            MyReferences.likedMessageRef(context, messageId).removeValue()
+            MyReferences.likedMessageRef(context, messageId).child(senderId).removeValue()
                     .addOnCompleteListener(task -> {
                         MyReferences.otherUserInfoRef(senderId)
                                 .addListenerForSingleValueEvent(new ValueEventListener() {
