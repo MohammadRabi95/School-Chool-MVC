@@ -21,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.thisischool.chool.Adapters.ClassChatGroupAdapter;
 import com.thisischool.chool.Classes.AppHelper;
 import com.thisischool.chool.Classes.Controller;
+import com.thisischool.chool.Models.Inbox;
 import com.thisischool.chool.Models.User;
 import com.thisischool.chool.OnlineDatabase.MyReferences;
 import com.thisischool.chool.OnlineDatabase.SendMessage;
@@ -108,7 +109,8 @@ public class ClassChatGroupActivity extends AppCompatActivity implements View.On
                 }
                 break;
             case R.id.lesson_cgc:
-                startActivity(new Intent(this, LessonsActivity.class));
+               // startActivity(new Intent(this, LessonsActivity.class));
+                startActivity(new Intent(ClassChatGroupActivity.this, InboxActivity.class));
                 break;
             case R.id.menu_cgc:
                 if (isMenuOpened) {

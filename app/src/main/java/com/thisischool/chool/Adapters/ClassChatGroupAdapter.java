@@ -2,6 +2,7 @@ package com.thisischool.chool.Adapters;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.thisischool.chool.Activities.PrivateChatActivity;
 import com.thisischool.chool.BuildConfig;
 import com.thisischool.chool.Classes.AppHelper;
 import com.thisischool.chool.Classes.Controller;
@@ -156,7 +158,9 @@ public class ClassChatGroupAdapter extends RecyclerView.Adapter<ClassChatGroupAd
                             });
                         });
                         sendMessage.setOnClickListener(view -> {
-
+                            Intent intent=new Intent(context, PrivateChatActivity.class);
+                            intent.putExtra("Receiver",mUser.getId());
+                            context.startActivity(intent);
                         });
 
                         dialog.show();

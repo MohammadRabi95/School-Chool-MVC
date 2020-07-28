@@ -52,6 +52,9 @@ public class PrivateChatActivity extends AppCompatActivity implements View.OnCli
     List<PrivateMessages> messagesList;
     CircleImageView profileImage;
     TextView username;
+   private int check=0;
+   private int check1=0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,17 +78,6 @@ public class PrivateChatActivity extends AppCompatActivity implements View.OnCli
         recyclerView.setHasFixedSize(true);
 
         newMessageEdit = findViewById(R.id.msgEdit_pc);
-
-        inboxRef = FirebaseDatabase.getInstance().getReference("Inbox");
-
-        Bundle extras = getIntent().getExtras();
-
-        if(extras != null) {
-            id = extras.getString("a", "");
-        } else {
-            id = inboxRef.push().getKey();
-        }
-
         menu = findViewById(R.id.opened_menu_pc);
 
         ImageView selectImageBtn, sendBtn, lessons, menuBtn, questionsBtn,
@@ -110,7 +102,13 @@ public class PrivateChatActivity extends AppCompatActivity implements View.OnCli
         notesBtn.setOnClickListener(this);
         mProfileBtn.setOnClickListener(this);
         schoolChatBtn.setOnClickListener(this);
+
+
+
     }
+
+
+
     @Override
     public void onClick(@NotNull View view) {
 
@@ -256,50 +254,6 @@ public class PrivateChatActivity extends AppCompatActivity implements View.OnCli
         });
 
     }
-    void addMyUsers(){
-        DatabaseReference userReference=FirebaseDatabase.getInstance().getReference("Users").child(Controller.CurrentUser.getUID()).child("MyUsers");
-        userReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot post: snapshot.getChildren()){
-                    if(post.exists()){
-                        String Uid=post.getValue().toString();
 
-                        if(!Receiver.equals(Uid)){
-                            DatabaseReference reference=FirebaseDatabase.getInstance().getReference("Users").child(Controller.CurrentUser.getUID()).child("MyUsers");
-                            reference.setValue(Receiver);
-                        }
-                    }else {
-                        DatabaseReference reference=FirebaseDatabase.getInstance().getReference("Users").child(Controller.CurrentUser.getUID()).child("MyUsers");
-                        reference.setValue(Receiver);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        DatabaseReference user2Reference=FirebaseDatabase.getInstance().getReference("Users").child(Receiver).child("MyUsers");
-        user2Reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot post: snapshot.getChildren()){
-                    String Uid=post.getValue().toString();
-                    if(!Controller.CurrentUser.getUID().equals(Uid)){
-                        DatabaseReference reference=FirebaseDatabase.getInstance().getReference("Users").child(Controller.CurrentUser.getUID()).child("MyUsers");
-                        reference.setValue(Controller.CurrentUser.getUID());
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    }
 
 }

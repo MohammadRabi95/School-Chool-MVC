@@ -37,7 +37,7 @@ public class PrivateChatAdapter extends RecyclerView.Adapter<PrivateChatAdapter.
     public void onBindViewHolder(@NonNull PrivateChatHolder holder, int position) {
         holder.textViewName.setText(list.get(position).getName());
         holder.textViewMessage.setText(list.get(position).getMessage());
-        System.out.println("###############################################"+list.get(position).getMessage());
+
     }
 
     @Override
