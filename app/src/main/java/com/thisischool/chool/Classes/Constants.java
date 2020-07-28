@@ -11,7 +11,7 @@ public class Constants {
     public static final String CLASS_GROUP_MESSAGE = "classGroupMessage";
     public static final String PRIVATE_MESSAGE = "privateMessage";
     public static final String WORKBOOK_TABLE = "work_book";
-    public static final String DEFAULT_STATUS = " ";
+    public static final String DEFAULT_STATUS = "Hey there! i'm using Chool App.";
     public static final String ADD_WORKBOOK = "add_workbook";
     public static final String UPDATE_WORKBOOK = "update_workbook";
     public static final String WORKBOOK_KEY = "workbook_key";

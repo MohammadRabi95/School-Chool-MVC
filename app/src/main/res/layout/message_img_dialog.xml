@@ -13,7 +13,7 @@
             android:layout_height="500dp"
             android:layout_gravity="center"
             android:layout_marginTop="15dp"
-            android:src="@drawable/loading_gif2"
+            android:src="@drawable/loading_gif"
             />
 
 

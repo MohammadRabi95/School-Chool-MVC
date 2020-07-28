@@ -58,9 +58,10 @@ public class ClassChatGroupActivity extends AppCompatActivity implements View.On
 
         menu = findViewById(R.id.opened_menu_cgc);
 
-        menu.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        menu.setBackground(new ColorDrawable(Color.TRANSPARENT));
 
         ImageView selectImageBtn, sendBtn, lessons, menuBtn;
+
         CircleImageView questionsBtn, classInfoBtn, notesBtn,
                 mProfileBtn, schoolChatBtn;
 

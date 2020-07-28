@@ -47,8 +47,8 @@ public class SendNotification {
                 @Override
                 public Map<String, String> getHeaders() {
                     Map<String, String> header = new HashMap<>();
-                    header.put("content-type", "application/json");
-                    header.put("authorization", mFirebaseServerKey);
+                    header.put("Content-Type", "application/json");
+                    header.put("Authorization", mFirebaseServerKey);
                     return header;
                 }
             };
@@ -82,8 +82,8 @@ public class SendNotification {
                 @Override
                 public Map<String, String> getHeaders() {
                     Map<String, String> header = new HashMap<>();
-                    header.put("content-type", "application/json");
-                    header.put("authorization", mFirebaseServerKey);
+                    header.put("Content-Type", "application/json");
+                    header.put("Authorization", mFirebaseServerKey);
                     return header;
                 }
             };
@@ -116,8 +116,8 @@ public class SendNotification {
                 @Override
                 public Map<String, String> getHeaders() {
                     Map<String, String> header = new HashMap<>();
-                    header.put("content-type", "application/json");
-                    header.put("authorization", mFirebaseServerKey);
+                    header.put("Content-Type", "application/json");
+                    header.put("Authorization", mFirebaseServerKey);
                     return header;
                 }
             };
@@ -150,8 +150,8 @@ public class SendNotification {
                 @Override
                 public Map<String, String> getHeaders() {
                     Map<String, String> header = new HashMap<>();
-                    header.put("content-type", "application/json");
-                    header.put("authorization", mFirebaseServerKey);
+                    header.put("Content-Type", "application/json");
+                    header.put("Authorization", mFirebaseServerKey);
                     return header;
                 }
             };
@@ -184,8 +184,8 @@ public class SendNotification {
                 @Override
                 public Map<String, String> getHeaders() {
                     Map<String, String> header = new HashMap<>();
-                    header.put("content-type", "application/json");
-                    header.put("authorization", mFirebaseServerKey);
+                    header.put("Content-Type", "application/json");
+                    header.put("Authorization", mFirebaseServerKey);
                     return header;
                 }
             };

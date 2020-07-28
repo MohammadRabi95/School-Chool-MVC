@@ -33,6 +33,7 @@ import java.util.Objects;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.atomic.AtomicReference;
 
+import static com.thisischool.chool.Classes.Constants.DEFAULT_DP;
 import static com.thisischool.chool.Classes.Constants.DEFAULT_STATUS;
 
 public class ChooseNicknameActivity extends AppCompatActivity {
@@ -85,7 +86,7 @@ public class ChooseNicknameActivity extends AppCompatActivity {
                                 }
                             }
                             User user = new User(phone, nick, classId, deviceToken,
-                                    Constants.DEFAULT_DP, DEFAULT_STATUS, 0,
+                                    DEFAULT_DP, DEFAULT_STATUS, 0,
                                     Controller.CurrentUser.getUID());
 
                             MyReferences.userInfoRef().setValue(user)
@@ -94,8 +95,6 @@ public class ChooseNicknameActivity extends AppCompatActivity {
                                             DatabaseReference reference = MyReferences.nickNameRef();
                                             String id = reference.push().getKey();
                                             NickName nickName1 = new NickName(nick, "extra", id);
-                                            Controller.CurrentUser.setUserClassId(ChooseNicknameActivity.this, classId);
-                                            Controller.CurrentUser.setUserNickname(ChooseNicknameActivity.this, nick);
                                             reference.child(id).setValue(nickName1)
                                                     .addOnCompleteListener(task1 -> {
                                                         AppHelper.setData(ChooseNicknameActivity.this);

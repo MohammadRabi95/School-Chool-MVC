@@ -16,6 +16,7 @@ import com.google.firebase.messaging.RemoteMessage;
 import com.thisischool.chool.Activities.AddWorkBookActivity;
 import com.thisischool.chool.Activities.ClassChatGroupActivity;
 import com.thisischool.chool.Activities.FriendRequestActivity;
+import com.thisischool.chool.Activities.InboxActivity;
 import com.thisischool.chool.Activities.WorkBookActivity;
 import com.thisischool.chool.Classes.Constants;
 import com.thisischool.chool.R;
@@ -68,7 +69,7 @@ public class MyNotificationService extends FirebaseMessagingService {
                 break;
 
             case TO_INBOX:
-                intent = new Intent(this, WorkBookActivity.class);
+                intent = new Intent(this, InboxActivity.class);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + click_action);
