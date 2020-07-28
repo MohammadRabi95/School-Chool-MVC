@@ -56,17 +56,6 @@
                 android:visibility="gone"
                 android:layout_marginTop="1dp"
                 android:padding="7dp"
-                android:src="@drawable/ic_baseline_delete_24"
-                android:layout_width="45dp"
-                android:layout_height="39dp"
-                android:tint="@color/black"
-                android:id="@+id/message_del_row"
-                android:layout_gravity="center"/>
-
-            <ImageView
-                android:visibility="gone"
-                android:layout_marginTop="1dp"
-                android:padding="7dp"
                 android:src="@drawable/ic_baseline_image_24"
                 android:layout_width="45dp"
                 android:layout_height="39dp"

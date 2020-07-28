@@ -1,5 +1,6 @@
 package com.thisischool.chool.Adapters;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -87,9 +88,9 @@ public class ClassChatGroupAdapter extends RecyclerView.Adapter<ClassChatGroupAd
 
             if (message.getSenderId().equals(Controller.CurrentUser.getUID())) {
                 holder.line.setVisibility(View.VISIBLE);
-                holder.delete.setVisibility(View.VISIBLE);
-                holder.delete.setOnClickListener(view -> {
-
+                holder.itemView.setOnLongClickListener(view -> {
+                    deleteAlert(message.getMessageId(), position, view);
+                    return false;
                 });
             }
 
@@ -140,10 +141,7 @@ public class ClassChatGroupAdapter extends RecyclerView.Adapter<ClassChatGroupAd
                             sendFriendRequest.setVisibility(View.GONE);
                             sendMessage.setVisibility(View.GONE);
                         }
-
-                        if (!NO_IMAGE.equals(mUser.getProfileImage())) {
-                            Picasso.get().load(mUser.getProfileImage()).noPlaceholder().fit().centerCrop().into(imageView);
-                        }
+                        Picasso.get().load(mUser.getProfileImage()).noPlaceholder().fit().centerCrop().into(imageView);
                         likeCount.setText(mUser.getTotalLikes() + "");
                         status.setText(mUser.getStatus());
 
@@ -151,15 +149,15 @@ public class ClassChatGroupAdapter extends RecyclerView.Adapter<ClassChatGroupAd
                             sendFriendRequest.setVisibility(View.GONE);
                             DatabaseReference ref = MyReferences.sendFriendRef(userId);
                             String pid = ref.push().getKey();
-                            FriendRequest friendRequest = new FriendRequest(Controller.CurrentUser.getUID(),pid);
+                            FriendRequest friendRequest = new FriendRequest(Controller.CurrentUser.getUID(), pid);
                             ref.child(pid).setValue(friendRequest)
-                            .addOnCompleteListener(task -> {
-                                if (task.isSuccessful()) {
-                                    SendNotification.friendRequestNotification(context,
-                                            Controller.CurrentUser.getUserNickname(context),
-                                            mUser.getDeviceToken());
-                                }
-                            });
+                                    .addOnCompleteListener(task -> {
+                                        if (task.isSuccessful()) {
+                                            SendNotification.friendRequestNotification(context,
+                                                    Controller.CurrentUser.getUserNickname(context),
+                                                    mUser.getDeviceToken());
+                                        }
+                                    });
                         });
                         sendMessage.setOnClickListener(view -> {
                             // Send Private message to Class mate...
@@ -264,7 +262,6 @@ public class ClassChatGroupAdapter extends RecyclerView.Adapter<ClassChatGroupAd
 
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError error) {
-
                                     }
                                 });
                     });
@@ -299,14 +296,12 @@ public class ClassChatGroupAdapter extends RecyclerView.Adapter<ClassChatGroupAd
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.child(Controller.CurrentUser.getUID()).exists()) {
-                            // imageView.setImageResource(R.drawable.ic_liked);
                             DrawableCompat.setTint(
                                     DrawableCompat.wrap(imageView.getDrawable()),
                                     ContextCompat.getColor(context, R.color.colorCoolBlue)
                             );
                             imageView.setTag(LIKED);
                         } else {
-                            // imageView.setImageResource(R.drawable.ic_like2);
                             imageView.setTag(LIKE);
                         }
                     }
@@ -317,10 +312,28 @@ public class ClassChatGroupAdapter extends RecyclerView.Adapter<ClassChatGroupAd
                 });
     }
 
+    private void deleteAlert(String id, int position, @NotNull View view) {
+        String msg = "Are you sure, you want to delete this message";
+        AlertDialog.Builder dial = new AlertDialog.Builder(view.getContext());
+        dial.setMessage(msg).setCancelable(false).
+                setPositiveButton("Yes", (dialog, which) -> {
+                    DatabaseReference reference = MyReferences.classChatGroup(context)
+                            .child(id);
+                    reference.removeValue().addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            notifyItemRemoved(position);
+                            dialog.dismiss();
+                        }
+                    });
+                }).setNegativeButton("No", (dialog, which) -> dialog.cancel());
+        AlertDialog dialog = dial.create();
+        dialog.show();
+    }
+
     static class ClassChatGroupHolder extends RecyclerView.ViewHolder {
 
         TextView nickname, message, count, line;
-        ImageView image, like, delete;
+        ImageView image, like;
 
         public ClassChatGroupHolder(@NonNull View itemView) {
             super(itemView);
@@ -329,7 +342,6 @@ public class ClassChatGroupAdapter extends RecyclerView.Adapter<ClassChatGroupAd
             count = itemView.findViewById(R.id.likeCounter_row);
             image = itemView.findViewById(R.id.message_img_row);
             like = itemView.findViewById(R.id.messageLike_row);
-            delete = itemView.findViewById(R.id.message_del_row);
             line = itemView.findViewById(R.id.line_row);
         }
     }
