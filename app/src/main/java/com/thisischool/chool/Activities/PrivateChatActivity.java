@@ -29,6 +29,7 @@ import com.thisischool.chool.Models.Inbox;
 import com.thisischool.chool.Models.PrivateMessages;
 import com.thisischool.chool.Models.User;
 import com.thisischool.chool.OnlineDatabase.MyReferences;
+import com.thisischool.chool.OnlineDatabase.SendNotification;
 import com.thisischool.chool.R;
 
 import org.jetbrains.annotations.NotNull;
@@ -172,7 +173,7 @@ public class PrivateChatActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(PrivateChatActivity.this, ""+message, Toast.LENGTH_SHORT).show();
+                    SendNotification.messageNotification(getApplicationContext(),senderUser.getNickname(),message,receiverUser.getDeviceToken());
                 }
                 else {
                     Toast.makeText(PrivateChatActivity.this, "Message send failed", Toast.LENGTH_SHORT).show();

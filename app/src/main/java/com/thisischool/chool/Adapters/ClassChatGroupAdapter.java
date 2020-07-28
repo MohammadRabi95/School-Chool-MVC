@@ -2,6 +2,7 @@ package com.thisischool.chool.Adapters;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.thisischool.chool.Activities.PrivateChatActivity;
 import com.thisischool.chool.BuildConfig;
 import com.thisischool.chool.Classes.AppHelper;
 import com.thisischool.chool.Classes.Controller;
@@ -87,10 +89,10 @@ public class ClassChatGroupAdapter extends RecyclerView.Adapter<ClassChatGroupAd
 
             if (message.getSenderId().equals(Controller.CurrentUser.getUID())) {
                 holder.line.setVisibility(View.VISIBLE);
-                holder.delete.setVisibility(View.VISIBLE);
-                holder.delete.setOnClickListener(view -> {
+        //        holder.delete.setVisibility(View.VISIBLE);
+            /*    holder.delete.setOnClickListener(view -> {
 
-                });
+                });*/
             }
 
             numberOfLikes(message.getMessageId(), holder.count);
@@ -163,6 +165,9 @@ public class ClassChatGroupAdapter extends RecyclerView.Adapter<ClassChatGroupAd
                         });
                         sendMessage.setOnClickListener(view -> {
                             // Send Private message to Class mate...
+                            Intent intent=new Intent(context, PrivateChatActivity.class);
+                            intent.putExtra("Receiver",mUser.getId());
+                            context.startActivity(intent);
                         });
 
                         Query query = MyReferences.sendFriendRef(userId)
@@ -329,7 +334,7 @@ public class ClassChatGroupAdapter extends RecyclerView.Adapter<ClassChatGroupAd
             count = itemView.findViewById(R.id.likeCounter_row);
             image = itemView.findViewById(R.id.message_img_row);
             like = itemView.findViewById(R.id.messageLike_row);
-            delete = itemView.findViewById(R.id.message_del_row);
+           // delete = itemView.findViewById(R.id.message_del_row);
             line = itemView.findViewById(R.id.line_row);
         }
     }

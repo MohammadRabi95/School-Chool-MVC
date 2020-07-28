@@ -1,6 +1,7 @@
 package com.thisischool.chool.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,14 @@ String lastMessage;
     public void onBindViewHolder(@NonNull InboxUserHolder holder, int position) {
 holder.user.setText(list.get(position).getNickname());
 checkLastMessage(list.get(position).getId(),holder.message);
+holder.itemView.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        Intent intent=new Intent(context, PrivateChatActivity.class);
+        intent.putExtra("Receiver",list.get(position).getId());
+        context.startActivity(intent);
+    }
+});
     }
 
     @Override
