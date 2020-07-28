@@ -18,7 +18,7 @@
             android:layout_height="250dp"
             android:id="@+id/profile_img_dialog"
             android:layout_gravity="center"
-            android:src="@drawable/loading_gif"
+            android:src="@drawable/ic_baseline_person_24"
             android:layout_marginTop="15dp"/>
 
         <TextView

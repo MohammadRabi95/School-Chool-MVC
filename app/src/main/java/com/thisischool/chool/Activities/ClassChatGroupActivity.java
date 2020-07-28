@@ -145,7 +145,6 @@ public class ClassChatGroupActivity extends AppCompatActivity implements View.On
                 break;
             case R.id.questions_menu_cgc:
                 startActivity(new Intent(ClassChatGroupActivity.this, InboxActivity.class));
-                finish();
                 break;
         }
     }

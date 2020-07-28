@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 import com.thisischool.chool.Adapters.PrivateChatAdapter;
 import com.thisischool.chool.Classes.AppHelper;
 import com.thisischool.chool.Classes.Controller;
@@ -188,7 +189,8 @@ public class PrivateChatActivity extends AppCompatActivity implements View.OnCli
                     User user = snapshot.getValue(User.class);
                     receiverUser = user;
                     username.setText(user.getNickname());
-                    //Picasso.get().load(receiverUser.getProfileImage()).centerCrop().fit().into(profileImage);
+                    Picasso.get().load(receiverUser.getProfileImage())
+                            .noPlaceholder().centerCrop().fit().into(profileImage);
                 }
             }
 
@@ -253,5 +255,9 @@ public class PrivateChatActivity extends AppCompatActivity implements View.OnCli
 
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }
