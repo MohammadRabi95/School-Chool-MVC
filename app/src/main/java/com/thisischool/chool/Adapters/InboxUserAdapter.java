@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 import com.thisischool.chool.Activities.PrivateChatActivity;
 import com.thisischool.chool.Classes.Controller;
 import com.thisischool.chool.Models.InboxMyUser;
@@ -45,6 +46,7 @@ String lastMessage;
     public void onBindViewHolder(@NonNull InboxUserHolder holder, int position) {
 holder.user.setText(list.get(position).getNickname());
 checkLastMessage(list.get(position).getId(),holder.message);
+        Picasso.get().load(list.get(position).getProfileImage()).into(holder.profile);
 holder.itemView.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {

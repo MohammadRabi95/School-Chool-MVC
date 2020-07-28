@@ -173,6 +173,7 @@ public class PrivateChatActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
+                    newMessageEdit.setText("");
                     SendNotification.messageNotification(getApplicationContext(),senderUser.getNickname(),message,receiverUser.getDeviceToken());
                 }
                 else {
