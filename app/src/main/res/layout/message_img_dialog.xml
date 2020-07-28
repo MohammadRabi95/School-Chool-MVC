@@ -7,12 +7,13 @@
     android:layout_gravity="center">
 
 
-        <ImageView
+        <pl.droidsonroids.gif.GifImageView
             android:id="@+id/msg_img_dialog"
             android:layout_width="match_parent"
             android:layout_height="500dp"
             android:layout_gravity="center"
             android:layout_marginTop="15dp"
+            android:src="@drawable/loading_gif2"
             />
 
 

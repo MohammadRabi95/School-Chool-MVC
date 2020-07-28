@@ -39,6 +39,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Objects;
 
+import pl.droidsonroids.gif.GifImageView;
+
 import static com.thisischool.chool.Classes.Constants.NO_IMAGE;
 
 public class ClassChatGroupAdapter extends RecyclerView.Adapter<ClassChatGroupAdapter.ClassChatGroupHolder> {
@@ -109,7 +111,7 @@ public class ClassChatGroupAdapter extends RecyclerView.Adapter<ClassChatGroupAd
         Dialog dialog = new Dialog(context);
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.message_img_dialog);
-        ImageView imageView = dialog.findViewById(R.id.msg_img_dialog);
+        GifImageView imageView = dialog.findViewById(R.id.msg_img_dialog);
         Picasso.get().load(url).noPlaceholder().fit().centerCrop().into(imageView);
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();

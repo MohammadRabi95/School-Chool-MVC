@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,6 +25,7 @@ import com.thisischool.chool.Classes.AppHelper;
 import com.thisischool.chool.Classes.Controller;
 import com.thisischool.chool.Models.Inbox;
 import com.thisischool.chool.Models.User;
+import com.thisischool.chool.Models.WorkBook;
 import com.thisischool.chool.OnlineDatabase.MyReferences;
 import com.thisischool.chool.OnlineDatabase.SendMessage;
 import com.thisischool.chool.Models.ClassChatGroupMessage;
@@ -32,6 +35,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ClassChatGroupActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -53,8 +58,11 @@ public class ClassChatGroupActivity extends AppCompatActivity implements View.On
 
         menu = findViewById(R.id.opened_menu_cgc);
 
-        ImageView selectImageBtn, sendBtn, lessons, menuBtn, questionsBtn,
-                classInfoBtn, notesBtn, mProfileBtn, schoolChatBtn;
+        menu.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        ImageView selectImageBtn, sendBtn, lessons, menuBtn;
+        CircleImageView questionsBtn, classInfoBtn, notesBtn,
+                mProfileBtn, schoolChatBtn;
 
         selectImageBtn = findViewById(R.id.select_img_cgc);
         sendBtn = findViewById(R.id.send_msg_cgc);
@@ -102,7 +110,7 @@ public class ClassChatGroupActivity extends AppCompatActivity implements View.On
                 break;
             case R.id.send_msg_cgc:
                 if (!newMessageEdit.getText().toString().isEmpty()) {
-                    SendMessage.sendMessageToGroupChat(this, newMessageEdit.getText().toString(), "");
+                    SendMessage.sendMessageToGroupChat(this, newMessageEdit.getText().toString(), "", newMessageEdit);
                 } else {
                     newMessageEdit.setError("Empty Message Cannot be send");
                     newMessageEdit.requestFocus();
@@ -110,7 +118,6 @@ public class ClassChatGroupActivity extends AppCompatActivity implements View.On
                 break;
             case R.id.lesson_cgc:
                // startActivity(new Intent(this, LessonsActivity.class));
-                startActivity(new Intent(ClassChatGroupActivity.this, InboxActivity.class));
                 break;
             case R.id.menu_cgc:
                 if (isMenuOpened) {
@@ -122,20 +129,22 @@ public class ClassChatGroupActivity extends AppCompatActivity implements View.On
                 }
                 break;
             case R.id.notes_menu_cgc:
-                startActivity(new Intent(this, NotesActivity.class));
+                //startActivity(new Intent(this, NotesActivity.class));
+                startActivity(new Intent(this, WorkBookActivity.class));
                 break;
             case R.id.classInfo_menu_cgc:
                 startActivity(new Intent(this, ClassInfoActivity.class));
                 break;
             case R.id.profile_menu_cgc:
-                startActivity(new Intent(this, MyProfileActivity.class));
+                startActivity(new Intent(this, FriendRequestActivity.class));
+               // startActivity(new Intent(this, MyProfileActivity.class));
                 break;
             case R.id.schoolChat_menu_cgc:
                 startActivity(new Intent(this, ClassChatGroupActivity.class));
                 finish();
                 break;
             case R.id.questions_menu_cgc:
-                startActivity(new Intent(this, FriendRequestActivity.class));
+                startActivity(new Intent(ClassChatGroupActivity.this, InboxActivity.class));
                 finish();
                 break;
         }

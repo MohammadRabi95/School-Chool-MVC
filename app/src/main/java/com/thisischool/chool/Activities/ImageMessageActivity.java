@@ -29,12 +29,13 @@ public class ImageMessageActivity extends AppCompatActivity {
     public static final String TAG = "UploadMenu";
     public static final int PICK_IMAGE_REQUEST = 1;
     private Uri path;
+    private EditText msgEdit;
     private static final String CLASS_GROUP_CHAT_IMAGES_STORAGE_DB = "Class_Group_Chat";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_message);
-        EditText msgEdit = findViewById(R.id.msg_imgmsg);
+        msgEdit = findViewById(R.id.msg_imgmsg);
         imageView = findViewById(R.id.imgview_imgmsg);
 
         findViewById(R.id.send_imgmsg).setOnClickListener(view -> {
@@ -76,7 +77,7 @@ public class ImageMessageActivity extends AppCompatActivity {
 
                     mStorageRef.putFile(path).addOnSuccessListener(taskSnapshot -> mStorageRef.getDownloadUrl().addOnSuccessListener(uri -> {
                         String url = uri.toString();
-                        SendMessage.sendMessageToGroupChat(this,msg,url);
+                        SendMessage.sendMessageToGroupChat(this,msg,url,msgEdit);
                     })).addOnFailureListener(e -> {
                         AppHelper.showToast(ImageMessageActivity.this,e.getMessage());
                     });

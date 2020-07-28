@@ -90,42 +90,53 @@
         android:visibility="gone"
         android:weightSum="5"
         >
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            app:civ_border_color="@color/black"
+            app:civ_border_width="1dp"
+            android:padding="10dp"
             android:id="@+id/profile_menu_cgc"
             android:tint="@color/black"
-            android:src="@drawable/ic_baseline_more_vert_24"
+            android:src="@drawable/ic_baseline_person_24"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             />
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:padding="10dp"
+            app:civ_border_width="1dp"
             android:id="@+id/schoolChat_menu_cgc"
             android:tint="@color/black"
-            android:src="@drawable/ic_baseline_more_vert_24"
+            android:src="@drawable/ic_baseline_school_24"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             />
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:padding="10dp"
+            app:civ_border_width="1dp"
             android:id="@+id/classInfo_menu_cgc"
             android:tint="@color/black"
-            android:src="@drawable/ic_baseline_more_vert_24"
+            android:src="@drawable/ic_baseline_info_24"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             />
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:padding="10dp"
+            app:civ_border_width="1dp"
             android:id="@+id/notes_menu_cgc"
             android:tint="@color/black"
-            android:src="@drawable/ic_baseline_more_vert_24"
+            android:src="@drawable/ic_baseline_notes_24"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             />
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:padding="10dp"
+            app:civ_border_width="1dp"
             android:id="@+id/questions_menu_cgc"
             android:tint="@color/black"
-            android:src="@drawable/ic_baseline_more_vert_24"
+            android:src="@drawable/ic_baseline_chat_24"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

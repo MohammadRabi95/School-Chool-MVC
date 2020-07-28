@@ -2,6 +2,7 @@ package com.thisischool.chool.OnlineDatabase;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.EditText;
 
 import com.google.firebase.database.DatabaseReference;
 import com.thisischool.chool.Classes.AppHelper;
@@ -14,7 +15,7 @@ public class SendMessage {
 
     private static final String TAG = "SendMessage";
 
-    public static void sendMessageToGroupChat(Context context, String msg, String imageUrl) {
+    public static void sendMessageToGroupChat(Context context, String msg, String imageUrl, EditText editText) {
 
         if ("".equals(imageUrl)){
             imageUrl = NO_IMAGE;
@@ -31,6 +32,7 @@ public class SendMessage {
                 SendNotification.classMessageNotification(context,
                         Controller.CurrentUser.getUserNickname(context),
                         msg, Controller.CurrentUser.getUserClassId(context));
+                editText.setText("");
                 Log.d(TAG, "onComplete:");
             }
         }).addOnFailureListener(e -> {
