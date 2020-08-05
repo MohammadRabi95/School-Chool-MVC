@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -20,12 +19,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.thisischool.chool.Adapters.ClassChatGroupAdapter;
 import com.thisischool.chool.Classes.AppHelper;
 import com.thisischool.chool.Classes.Controller;
-import com.thisischool.chool.Models.Inbox;
-import com.thisischool.chool.Models.User;
-import com.thisischool.chool.Models.WorkBook;
 import com.thisischool.chool.OnlineDatabase.MyReferences;
 import com.thisischool.chool.OnlineDatabase.SendMessage;
 import com.thisischool.chool.Models.ClassChatGroupMessage;
@@ -51,6 +48,10 @@ public class ClassChatGroupActivity extends AppCompatActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        FirebaseMessaging.getInstance().subscribeToTopic(Controller.CurrentUser.getUserClassId(this));
+
+        //FirebaseMessaging.getInstance().subscribeToTopic("all");
 
         recyclerView = findViewById(R.id.cgc_recyclerview);
 
@@ -118,7 +119,7 @@ public class ClassChatGroupActivity extends AppCompatActivity implements View.On
                 }
                 break;
             case R.id.lesson_cgc:
-               // startActivity(new Intent(this, LessonsActivity.class));
+                startActivity(new Intent(this, LessonsActivity.class));
                 break;
             case R.id.menu_cgc:
                 if (isMenuOpened) {
@@ -130,22 +131,20 @@ public class ClassChatGroupActivity extends AppCompatActivity implements View.On
                 }
                 break;
             case R.id.notes_menu_cgc:
-                //startActivity(new Intent(this, NotesActivity.class));
-                startActivity(new Intent(this, WorkBookActivity.class));
+                startActivity(new Intent(this, NotesActivity.class));
                 break;
             case R.id.classInfo_menu_cgc:
                 startActivity(new Intent(this, ClassInfoActivity.class));
                 break;
             case R.id.profile_menu_cgc:
-                startActivity(new Intent(this, FriendRequestActivity.class));
-               // startActivity(new Intent(this, MyProfileActivity.class));
+                startActivity(new Intent(this, MyProfileActivity.class));
                 break;
             case R.id.schoolChat_menu_cgc:
                 startActivity(new Intent(this, ClassChatGroupActivity.class));
                 finish();
                 break;
             case R.id.questions_menu_cgc:
-                startActivity(new Intent(ClassChatGroupActivity.this, InboxActivity.class));
+                startActivity(new Intent(this, QuestionActivity.class));
                 break;
         }
     }
@@ -154,7 +153,7 @@ public class ClassChatGroupActivity extends AppCompatActivity implements View.On
         messageList = new ArrayList<>();
         Dialog dialog = AppHelper.getLoadingDialog(this);
         dialog.show();
-        DatabaseReference reference = MyReferences.classChatGroup(this);
+        DatabaseReference reference = MyReferences.classGroupMessages(this);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

@@ -1,11 +1,13 @@
 package com.thisischool.chool.OnlineDatabase;
 
 import android.content.Context;
+import android.net.Uri;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.thisischool.chool.Classes.AppHelper;
-import com.thisischool.chool.Classes.Constants;
 import com.thisischool.chool.Classes.Controller;
 
 import org.jetbrains.annotations.NotNull;
@@ -22,20 +24,48 @@ public class MyReferences {
     private static final String INBOX_DB = "Inbox";
     private static final String Likes = "Likes";
     private static final String ALL_INBOX = "all_Inbox";
+    private static final String PROFILE_IMAGES_ST = "profile_images";
+    private static final String NOTIFICATION_DB = "notifications";
+    private static final String MESSAGES = "messages";
+    private static final String STRENGTH = "strength";
+    private static final String QUESTIONS = "questions";
+    private static final String ANSWERS = "answers";
+
+
 
     @NotNull
     public static DatabaseReference nickNameRef() {
         return FirebaseDatabase.getInstance().getReference(NICKNAME_DB);
     }
+
     @NotNull
     public static DatabaseReference userInfoRef() {
         return FirebaseDatabase.getInstance().getReference(USER_DB)
                 .child(Controller.CurrentUser.getUID()).child(USER_INFO_DB);
     }
+
     @NotNull
-    public static DatabaseReference classChatGroup(Context context) {
+    public static DatabaseReference classGroupStrength(Context context) {
         return FirebaseDatabase.getInstance().getReference(CLASS_CHAT_GROUP_DB)
-                .child(Controller.CurrentUser.getUserClassId(context));
+                .child(Controller.CurrentUser.getUserClassId(context)).child(STRENGTH);
+    }
+
+    @NotNull
+    public static DatabaseReference classGroupAnswers(Context context) {
+        return FirebaseDatabase.getInstance().getReference(CLASS_CHAT_GROUP_DB)
+                .child(Controller.CurrentUser.getUserClassId(context)).child(ANSWERS);
+    }
+
+    @NotNull
+    public static DatabaseReference classGroupQuestions(Context context) {
+        return FirebaseDatabase.getInstance().getReference(CLASS_CHAT_GROUP_DB)
+                .child(Controller.CurrentUser.getUserClassId(context)).child(QUESTIONS);
+    }
+
+    @NotNull
+    public static DatabaseReference classGroupMessages(Context context) {
+        return FirebaseDatabase.getInstance().getReference(CLASS_CHAT_GROUP_DB)
+                .child(Controller.CurrentUser.getUserClassId(context)).child(MESSAGES);
     }
 
     @NotNull
@@ -85,6 +115,19 @@ public class MyReferences {
     public static DatabaseReference likedMessageRef(Context context, String messageId) {
         return FirebaseDatabase.getInstance().getReference()
                 .child(Likes).child(Controller.CurrentUser.getUserClassId(context)).child(messageId);
+    }
+
+    @NotNull
+    public static DatabaseReference notificationsRef() {
+        return FirebaseDatabase.getInstance().getReference(USER_DB)
+                .child(Controller.CurrentUser.getUID()).child(NOTIFICATION_DB);
+    }
+
+    @NotNull
+    public static StorageReference profileImageStorage(Context context, Uri path){
+        return FirebaseStorage.getInstance().getReference(PROFILE_IMAGES_ST)
+                .child(System.currentTimeMillis() + "" + "." + AppHelper.getFileExtension(context,path));
+
     }
 
 

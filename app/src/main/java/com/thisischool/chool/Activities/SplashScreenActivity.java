@@ -14,7 +14,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen_activty);
-
+       // FirebaseAuth.getInstance().signOut();
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             startActivity(new Intent(SplashScreenActivity.this,ClassChatGroupActivity.class));
         } else {

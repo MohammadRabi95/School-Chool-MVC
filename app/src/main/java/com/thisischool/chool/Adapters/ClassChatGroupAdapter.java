@@ -78,6 +78,8 @@ public class ClassChatGroupAdapter extends RecyclerView.Adapter<ClassChatGroupAd
                 holder.image.setOnClickListener(v -> {
                     showMessageImage(message.getPostImageUrl());
                 });
+            } else {
+                holder.image.setVisibility(View.GONE);
             }
 
             holder.itemView.setOnClickListener(view -> {
@@ -91,10 +93,13 @@ public class ClassChatGroupAdapter extends RecyclerView.Adapter<ClassChatGroupAd
 
             if (message.getSenderId().equals(Controller.CurrentUser.getUID())) {
                 holder.line.setVisibility(View.VISIBLE);
-        //        holder.delete.setVisibility(View.VISIBLE);
-            /*    holder.delete.setOnClickListener(view -> {
-
-                });*/
+                holder.itemView.setOnLongClickListener(view -> {
+                    // alert dialog for delete
+                    AppHelper.showToast(context,"delete in progress");
+                    return false;
+                });
+            } else {
+                holder.line.setVisibility(View.GONE);
             }
 
             numberOfLikes(message.getMessageId(), holder.count);
@@ -306,15 +311,17 @@ public class ClassChatGroupAdapter extends RecyclerView.Adapter<ClassChatGroupAd
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.child(Controller.CurrentUser.getUID()).exists()) {
-                            // imageView.setImageResource(R.drawable.ic_liked);
                             DrawableCompat.setTint(
                                     DrawableCompat.wrap(imageView.getDrawable()),
                                     ContextCompat.getColor(context, R.color.colorCoolBlue)
                             );
                             imageView.setTag(LIKED);
                         } else {
-                            // imageView.setImageResource(R.drawable.ic_like2);
                             imageView.setTag(LIKE);
+                            DrawableCompat.setTint(
+                                    DrawableCompat.wrap(imageView.getDrawable()),
+                                    ContextCompat.getColor(context, R.color.colorThinBlue)
+                            );
                         }
                     }
 
@@ -327,7 +334,7 @@ public class ClassChatGroupAdapter extends RecyclerView.Adapter<ClassChatGroupAd
     static class ClassChatGroupHolder extends RecyclerView.ViewHolder {
 
         TextView nickname, message, count, line;
-        ImageView image, like, delete;
+        ImageView image, like;
 
         public ClassChatGroupHolder(@NonNull View itemView) {
             super(itemView);
@@ -336,7 +343,6 @@ public class ClassChatGroupAdapter extends RecyclerView.Adapter<ClassChatGroupAd
             count = itemView.findViewById(R.id.likeCounter_row);
             image = itemView.findViewById(R.id.message_img_row);
             like = itemView.findViewById(R.id.messageLike_row);
-           // delete = itemView.findViewById(R.id.message_del_row);
             line = itemView.findViewById(R.id.line_row);
         }
     }

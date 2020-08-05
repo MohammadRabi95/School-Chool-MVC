@@ -26,8 +26,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import static com.thisischool.chool.Classes.Constants.NO_IMAGE;
-
 public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdapter.FriendRequestHolder> {
 
     private List<FriendRequest> list;
@@ -43,7 +41,7 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
     @Override
     public FriendRequestHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new FriendRequestHolder(LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.friend_request_row,parent,false));
+                R.layout.friend_request_row, parent, false));
     }
 
     @Override
@@ -53,28 +51,29 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
         if (friendRequest != null) {
             MyReferences.otherUserInfoRef(friendRequest.getSenderId())
                     .addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.exists()) {
-                                user = snapshot.getValue(User.class);
-                                if (user != null) {
-                                    holder.nickname.setText(user.getNickname());
-                                        Picasso.get().load(user.getProfileImage()).noPlaceholder()
-                                                .fit().centerCrop().into(holder.profileImage);
-                                    holder.accept.setOnClickListener(view -> {
-                                        acceptRequest(user,position,friendRequest.getReqId());
-                                    });
-                                    holder.reject.setOnClickListener(view -> {
-                                        rejectRequest(friendRequest.getReqId(), position);
-                                    });
-                                }
-                            }
-                        }
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
+                                                        @Override
+                                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                            if (snapshot.exists()) {
+                                                                user = snapshot.getValue(User.class);
+                                                                if (user != null) {
+                                                                    holder.nickname.setText(user.getNickname());
+                                                                    Picasso.get().load(user.getProfileImage()).noPlaceholder()
+                                                                            .fit().centerCrop().into(holder.profileImage);
+                                                                    holder.accept.setOnClickListener(view -> {
+                                                                        acceptRequest(user, position, friendRequest.getReqId());
+                                                                    });
+                                                                    holder.reject.setOnClickListener(view -> {
+                                                                        rejectRequest(friendRequest.getReqId(), position);
+                                                                    });
+                                                                }
+                                                            }
+                                                        }
 
-                        }
-                    }
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                                        }
+                                                    }
                     );
 
         }
@@ -85,10 +84,33 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
         return list.size();
     }
 
+    private void acceptRequest(@NotNull User user, int position, String id) {
+        Friends friends = new Friends(user.getId());
+        MyReferences.friendsRef().child(user.getId())
+                .setValue(friends).addOnCompleteListener(task -> {
+            MyReferences.friendsRequestRef().child(id)
+                    .removeValue().addOnCompleteListener(task1 -> {
+                list.remove(position);
+                notifyItemRemoved(position);
+                SendNotification.friendRequestAcceptedNotification(context,
+                        user.getNickname(), user.getDeviceToken());
+            });
+        });
+    }
+
+    private void rejectRequest(String id, int position) {
+        MyReferences.friendsRequestRef().child(id).removeValue()
+                .addOnCompleteListener(task -> {
+                    list.remove(position);
+                    notifyItemRemoved(position);
+                });
+    }
+
     static class FriendRequestHolder extends RecyclerView.ViewHolder {
         TextView nickname;
         ImageView profileImage;
-        Button accept,reject;
+        Button accept, reject;
+
         public FriendRequestHolder(@NonNull View itemView) {
             super(itemView);
             nickname = itemView.findViewById(R.id.nickname_firendreq_row);
@@ -96,25 +118,5 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
             accept = itemView.findViewById(R.id.accept_friendreq_row);
             reject = itemView.findViewById(R.id.reject_friendreq_row);
         }
-    }
-
-    private void acceptRequest(@NotNull User user, int position, String id) {
-        Friends friends = new Friends(user.getId());
-        MyReferences.friendsRef().child(user.getId())
-                .setValue(friends).addOnCompleteListener(task -> {
-                    MyReferences.friendsRequestRef().child(id)
-                            .removeValue().addOnCompleteListener(task1 -> {
-                       notifyItemRemoved(position);
-                        SendNotification.friendRequestAcceptedNotification(context,
-                                user.getNickname(),user.getDeviceToken());
-                    });
-                });
-    }
-
-    private void rejectRequest(String id, int position) {
-            MyReferences.friendsRequestRef().child(id).removeValue()
-            .addOnCompleteListener(task -> {
-                    notifyItemRemoved(position);
-    });
     }
 }

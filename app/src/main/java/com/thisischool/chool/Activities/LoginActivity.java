@@ -59,8 +59,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
 
-        //FirebaseAuth.getInstance().signOut();
-
         otpCodeEdit = findViewById(R.id.otp_frg_edit);
         phoneEdit = findViewById(R.id.phone_frg_edit);
         sendBtn = findViewById(R.id.next);
@@ -357,7 +355,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @NotNull
     @Contract(pure = true)
     private String countryCode(String num) {
-        return "+92" + num;
+        return "+90" + num;
     }
 
     @Override

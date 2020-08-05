@@ -11,9 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.Light.NoActionBar">
+        <activity android:name=".Activities.AnswersActivity"></activity>
+        <activity android:name=".Activities.QuestionActivity" />
+        <activity android:name=".Activities.MyFriendsActivity" />
+        <activity android:name=".Activities.WalletActivity" />
         <activity android:name=".Activities.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -33,7 +38,7 @@
         <activity android:name=".Activities.ImageMessageActivity" />
         <activity android:name=".Activities.ClassInfoActivity" />
         <activity android:name=".Activities.NotesActivity" />
-        <activity android:name=".Activities.LoginActivity"/>
+        <activity android:name=".Activities.LoginActivity" />
         <activity android:name=".Activities.ClassChatGroupActivity" />
 
         <service

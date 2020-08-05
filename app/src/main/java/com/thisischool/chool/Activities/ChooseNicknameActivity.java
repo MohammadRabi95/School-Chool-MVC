@@ -88,7 +88,7 @@ public class ChooseNicknameActivity extends AppCompatActivity {
                             User user = new User(phone, nick, classId, deviceToken,
                                     DEFAULT_DP, DEFAULT_STATUS, 0,
                                     Controller.CurrentUser.getUID());
-
+                            addToClassStrength(nick);
                             MyReferences.userInfoRef().setValue(user)
                                     .addOnCompleteListener(task -> {
                                         if (task.isSuccessful()) {
@@ -115,13 +115,17 @@ public class ChooseNicknameActivity extends AppCompatActivity {
     }
 
     private void checkClassStrengthAndGetClassId() {
-        DatabaseReference reference = MyReferences.classIdsRef();
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("Class_Chat_Groups");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         String id = dataSnapshot.getKey();
+                        if (!classId.isEmpty()) {
+                            return;
+                        }
                         assert id != null;
                         reference.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -153,5 +157,13 @@ public class ChooseNicknameActivity extends AppCompatActivity {
                 AppHelper.showToast(ChooseNicknameActivity.this,error.getMessage());
             }
         });
+    }
+
+    private void addToClassStrength(String n) {
+        FirebaseDatabase.getInstance()
+                .getReference("Class_Chat_Groups")
+                .child(classId)
+                .child(Controller.CurrentUser.getUID())
+                .setValue(n);
     }
 }

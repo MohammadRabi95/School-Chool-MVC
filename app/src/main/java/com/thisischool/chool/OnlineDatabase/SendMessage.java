@@ -20,7 +20,7 @@ public class SendMessage {
         if ("".equals(imageUrl)){
             imageUrl = NO_IMAGE;
         }
-        DatabaseReference msgRef = MyReferences.classChatGroup(context);
+        DatabaseReference msgRef = MyReferences.classGroupMessages(context);
         String messageId = msgRef.push().getKey();
         ClassChatGroupMessage message = new ClassChatGroupMessage(msg,
                 Controller.CurrentUser.getUserNickname(context),

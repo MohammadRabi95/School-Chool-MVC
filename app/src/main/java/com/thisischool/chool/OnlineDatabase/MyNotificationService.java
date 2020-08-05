@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.thisischool.chool.Activities.AddWorkBookActivity;
@@ -19,6 +20,7 @@ import com.thisischool.chool.Activities.FriendRequestActivity;
 import com.thisischool.chool.Activities.InboxActivity;
 import com.thisischool.chool.Activities.WorkBookActivity;
 import com.thisischool.chool.Classes.Constants;
+import com.thisischool.chool.Models.Notification;
 import com.thisischool.chool.R;
 
 import org.json.JSONObject;
@@ -27,6 +29,7 @@ import static com.thisischool.chool.Classes.Constants.CLICK_ACTION;
 import static com.thisischool.chool.Classes.Constants.TO_CLASS_CHAT_GROUP;
 import static com.thisischool.chool.Classes.Constants.TO_FRIEND_REQUEST;
 import static com.thisischool.chool.Classes.Constants.TO_INBOX;
+import static com.thisischool.chool.OnlineDatabase.MyReferences.notificationsRef;
 
 public class MyNotificationService extends FirebaseMessagingService {
     private static final String TAG = "MyNotificationService";
@@ -37,12 +40,14 @@ public class MyNotificationService extends FirebaseMessagingService {
 
         Log.d(TAG, "onMessageReceived: ");
         int click_action = 0;
-        if (remoteMessage.getData().size() > 0 ){
+        if (remoteMessage.getData().size() > 0) {
 
             try {
                 JSONObject object = new JSONObject(remoteMessage.getData());
-                click_action = object.getInt(CLICK_ACTION);
+                JSONObject object1 = object.getJSONObject("notification");
+                click_action = object1.getInt(CLICK_ACTION);
 
+                Log.d(TAG, "onMessageReceived Click Action: " + click_action);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -53,9 +58,22 @@ public class MyNotificationService extends FirebaseMessagingService {
             String body = remoteMessage.getNotification().getBody();
 
             showNotification(title, body, click_action);
-        }}
+            saveNotification(title, body, click_action);
+        }
+    }
 
-    private void showNotification(String title, String message, int click_action){
+    private void saveNotification(String title, String msg, int click_action) {
+        DatabaseReference reference = notificationsRef();
+        String id = reference.push().getKey();
+        Notification notification = new Notification(click_action,title,msg,id);
+        reference.child(id).setValue(notification).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Log.d(TAG, "saveNotification: ");
+            }
+        });
+    }
+
+    private void showNotification(String title, String message, int click_action) {
 
         Intent intent;
 
@@ -79,14 +97,14 @@ public class MyNotificationService extends FirebaseMessagingService {
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent
                 , PendingIntent.FLAG_ONE_SHOT);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,"MyNotifications")
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "MyNotifications")
                 .setContentTitle(title)
                 .setSmallIcon(R.drawable.add_photo)
                 .setAutoCancel(true)
                 .setContentText(message)
                 .setContentIntent(pendingIntent);
 
-        builder.setVibrate(new long[] {2000});
+        builder.setVibrate(new long[]{2000});
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
@@ -94,7 +112,7 @@ public class MyNotificationService extends FirebaseMessagingService {
             NotificationChannel channel = new NotificationChannel("MyNotificati", title,
                     importance);
             channel.setDescription(message);
-            channel.setVibrationPattern(new long[] {2000});
+            channel.setVibrationPattern(new long[]{2000});
             channel.enableVibration(true);
             channel.enableLights(true);
             NotificationManager notificationManager =
