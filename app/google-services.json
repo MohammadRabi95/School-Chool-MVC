@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "780563659190-14iok6f4n7ftlhoe71ateoouf1hja3ia.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.thisischool.chool",
+            "certificate_hash": "51affd07ff2b997ed2065f351e2e293d696fd853"
+          }
+        },
+        {
           "client_id": "780563659190-kr93clghuac1hrt9aihr0oncbloevk3d.apps.googleusercontent.com",
           "client_type": 3
         }
