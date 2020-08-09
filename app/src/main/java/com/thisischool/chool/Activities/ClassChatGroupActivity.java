@@ -134,7 +134,7 @@ public class ClassChatGroupActivity extends AppCompatActivity implements View.On
                 startActivity(new Intent(this, NotesActivity.class));
                 break;
             case R.id.classInfo_menu_cgc:
-                startActivity(new Intent(this, ClassInfoActivity.class));
+                startActivity(new Intent(this, InfoActivity.class));
                 break;
             case R.id.profile_menu_cgc:
                 startActivity(new Intent(this, MyProfileActivity.class));

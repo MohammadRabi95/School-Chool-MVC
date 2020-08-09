@@ -23,6 +23,7 @@ import com.thisischool.chool.Classes.AppHelper;
 import com.thisischool.chool.Classes.Constants;
 import com.thisischool.chool.Classes.Controller;
 import com.thisischool.chool.Models.ClassChatGroupMessage;
+import com.thisischool.chool.Models.Info;
 import com.thisischool.chool.Models.NickName;
 import com.thisischool.chool.Models.User;
 import com.thisischool.chool.OnlineDatabase.MyReferences;
@@ -88,7 +89,7 @@ public class ChooseNicknameActivity extends AppCompatActivity {
                             User user = new User(phone, nick, classId, deviceToken,
                                     DEFAULT_DP, DEFAULT_STATUS, 0,
                                     Controller.CurrentUser.getUID());
-                            addToClassStrength(nick);
+                            addToClassStrength();
                             MyReferences.userInfoRef().setValue(user)
                                     .addOnCompleteListener(task -> {
                                         if (task.isSuccessful()) {
@@ -116,7 +117,7 @@ public class ChooseNicknameActivity extends AppCompatActivity {
 
     private void checkClassStrengthAndGetClassId() {
         DatabaseReference reference = FirebaseDatabase.getInstance()
-                .getReference("Class_Chat_Groups");
+                .getReference("Class_Chat_Groups").child("strength");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -159,11 +160,13 @@ public class ChooseNicknameActivity extends AppCompatActivity {
         });
     }
 
-    private void addToClassStrength(String n) {
-        FirebaseDatabase.getInstance()
-                .getReference("Class_Chat_Groups")
-                .child(classId)
-                .child(Controller.CurrentUser.getUID())
-                .setValue(n);
+    private void addToClassStrength() {
+        Info info = new Info();
+        info.setId(Controller.CurrentUser.getUID());
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("Class_Chat_Groups").child("strength");
+        String id = reference.push().getKey();
+        reference.child(id)
+                .setValue(info);
     }
 }

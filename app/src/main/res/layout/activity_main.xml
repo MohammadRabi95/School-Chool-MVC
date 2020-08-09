@@ -136,7 +136,7 @@
             app:civ_border_width="1dp"
             android:id="@+id/questions_menu_cgc"
             android:tint="@color/black"
-            android:src="@drawable/ic_baseline_chat_24"
+            android:src="@drawable/ic_baseline_question_answer_24"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

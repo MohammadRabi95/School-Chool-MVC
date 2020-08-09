@@ -27,7 +27,7 @@ public class MyReferences {
     private static final String PROFILE_IMAGES_ST = "profile_images";
     private static final String NOTIFICATION_DB = "notifications";
     private static final String MESSAGES = "messages";
-    private static final String STRENGTH = "strength";
+    private static final String NOTES = "notes";
     private static final String QUESTIONS = "questions";
     private static final String ANSWERS = "answers";
 
@@ -45,9 +45,9 @@ public class MyReferences {
     }
 
     @NotNull
-    public static DatabaseReference classGroupStrength(Context context) {
+    public static DatabaseReference classGroupNotes(Context context) {
         return FirebaseDatabase.getInstance().getReference(CLASS_CHAT_GROUP_DB)
-                .child(Controller.CurrentUser.getUserClassId(context)).child(STRENGTH);
+                .child(Controller.CurrentUser.getUserClassId(context)).child(NOTES);
     }
 
     @NotNull

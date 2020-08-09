@@ -3,9 +3,12 @@ package com.thisischool.chool.Classes;
 import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
+import android.provider.Telephony;
 import android.view.Gravity;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
@@ -93,5 +96,30 @@ public class AppHelper {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+    }
+
+    public static void inviteFriend(Context context) {
+        String body = Controller.CurrentUser.getUserNickname(context) + " from Chool App"
+                + "\n Referral/Invitation Code is ' " + Controller.CurrentUser.getUserClassId(context)
+                + " ' Copy the code and put in Referral/Invitation Code while registration. " +
+                "\n Thanks! ";
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(context);
+
+            Intent sendIntent = new Intent(Intent.ACTION_SEND);
+            sendIntent.setType("text/plain");
+            sendIntent.putExtra(Intent.EXTRA_TEXT, body);
+
+            if (defaultSmsPackageName != null) {
+                sendIntent.setPackage(defaultSmsPackageName);
+            }
+            context.startActivity(sendIntent);
+
+        } else {
+            Intent smsIntent = new Intent(android.content.Intent.ACTION_VIEW);
+            smsIntent.setType("vnd.android-dir/mms-sms");
+            smsIntent.putExtra("sms_body", body);
+            context.startActivity(smsIntent);
+        }
     }
 }

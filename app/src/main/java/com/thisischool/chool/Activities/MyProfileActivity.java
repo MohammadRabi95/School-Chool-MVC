@@ -50,6 +50,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.thisischool.chool.Classes.AppHelper.inviteFriend;
 import static com.thisischool.chool.OnlineDatabase.MyReferences.notificationsRef;
 
 public class MyProfileActivity extends AppCompatActivity implements View.OnClickListener {
@@ -155,7 +156,7 @@ public class MyProfileActivity extends AppCompatActivity implements View.OnClick
                 break;
 
             case R.id.invite_menu_mp:
-                inviteFriend();
+                inviteFriend(this);
                 break;
 
             case R.id.notes_menu_mp:
@@ -200,31 +201,6 @@ public class MyProfileActivity extends AppCompatActivity implements View.OnClick
             MyReferences.userInfoRef().setValue(user_).addOnCompleteListener(task -> {
                 // updated
             });
-        }
-    }
-
-    private void inviteFriend() {
-        String body = Controller.CurrentUser.getUserNickname(this) + " from Chool App"
-                + "\n Referral/Invitation Code is ' " + Controller.CurrentUser.getUserClassId(this)
-                + " ' Copy the code and put in Referral/Invitation Code while registration. " +
-                "\n Thanks! ";
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(this);
-
-            Intent sendIntent = new Intent(Intent.ACTION_SEND);
-            sendIntent.setType("text/plain");
-            sendIntent.putExtra(Intent.EXTRA_TEXT, body);
-
-            if (defaultSmsPackageName != null) {
-                sendIntent.setPackage(defaultSmsPackageName);
-            }
-            startActivity(sendIntent);
-
-        } else {
-            Intent smsIntent = new Intent(android.content.Intent.ACTION_VIEW);
-            smsIntent.setType("vnd.android-dir/mms-sms");
-            smsIntent.putExtra("sms_body", body);
-            startActivity(smsIntent);
         }
     }
 
