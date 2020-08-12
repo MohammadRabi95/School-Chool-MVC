@@ -28,6 +28,19 @@ public class WorkBook implements Serializable {
     @NonNull
     private boolean isFavorite;
 
+    @ColumnInfo (name = "image")
+    @NonNull
+    private String image;
+
+    @NonNull
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(@NonNull String image) {
+        this.image = image;
+    }
+
     public boolean isFavorite() {
         return isFavorite;
     }
