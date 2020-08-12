@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.thisischool.chool.Classes.Constants;
 import com.thisischool.chool.LocalDatabase.DatabaseHelper;
 import com.thisischool.chool.Models.WorkBook;
 import com.thisischool.chool.R;
@@ -15,6 +14,7 @@ import static com.thisischool.chool.Classes.Constants.ADD_WORKBOOK;
 import static com.thisischool.chool.Classes.Constants.UPDATE_WORKBOOK;
 import static com.thisischool.chool.Classes.Constants.WORKBOOK_DATA;
 import static com.thisischool.chool.Classes.Constants.WORKBOOK_KEY;
+import static com.thisischool.chool.Classes.Constants.WORKBOOK_TABLE;
 
 public class AddWorkBookActivity extends AppCompatActivity {
 
@@ -50,13 +50,13 @@ public class AddWorkBookActivity extends AppCompatActivity {
     }
 
     private void addWorkbook(String title, String content) {
-        DatabaseHelper databaseHelper = DatabaseHelper.getInstance(this);
+        DatabaseHelper databaseHelper = DatabaseHelper.getInstance(this, WORKBOOK_TABLE);
         WorkBook workBook_ = new WorkBook();
         switch (mCase) {
             case ADD_WORKBOOK:
                 workBook_.setTitle(title);
                 workBook_.setContent(content);
-                databaseHelper.workBookDao().insertWorkBook(workBook_);
+                databaseHelper.notesDao().insertWorkBook(workBook_);
                 finish();
                 break;
 
@@ -64,7 +64,7 @@ public class AddWorkBookActivity extends AppCompatActivity {
                 workBook_.setContent(content);
                 workBook_.setTitle(title);
                 workBook_.setId(workBook.getId());
-                databaseHelper.workBookDao().updateWorkBook(workBook_);
+                databaseHelper.notesDao().updateWorkBook(workBook_);
                 finish();
                 break;
         }

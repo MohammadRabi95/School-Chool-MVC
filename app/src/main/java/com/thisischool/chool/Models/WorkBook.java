@@ -24,6 +24,18 @@ public class WorkBook implements Serializable {
     @NonNull
     private String content;
 
+    @ColumnInfo (name = "favorite")
+    @NonNull
+    private boolean isFavorite;
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
+
     public int getId() {
         return id;
     }

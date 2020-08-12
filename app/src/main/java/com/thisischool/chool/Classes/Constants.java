@@ -15,6 +15,10 @@ public class Constants {
     public static final String WORKBOOK_KEY = "workbook_key";
     public static final String WORKBOOK_DATA = "workbook_data";
     public static final String QUESTION_ID = "question_id";
+    public static final String REPLIES_KEY = "rep";
+    public static final String TODO_TABLE = "todo_table";
+    public static final String TODO_KEY = "todo";
+    public static final String TODO_DATA = "todo_data";
 
 
 }

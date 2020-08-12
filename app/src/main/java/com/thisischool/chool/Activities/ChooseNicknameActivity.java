@@ -89,7 +89,7 @@ public class ChooseNicknameActivity extends AppCompatActivity {
                             User user = new User(phone, nick, classId, deviceToken,
                                     DEFAULT_DP, DEFAULT_STATUS, 0,
                                     Controller.CurrentUser.getUID());
-                            addToClassStrength();
+                            addToClassStrength(classId);
                             MyReferences.userInfoRef().setValue(user)
                                     .addOnCompleteListener(task -> {
                                         if (task.isSuccessful()) {
@@ -137,7 +137,7 @@ public class ChooseNicknameActivity extends AppCompatActivity {
                                         classId = snapshot.getKey();
                                     } else {
                                         classId = reference.push().getKey();
-                                        reference.child(classId).child("test").setValue("test");
+                                        reference.child(classId).child("test").setValue("inner if");
                                     }
                                 }
                             }
@@ -149,7 +149,7 @@ public class ChooseNicknameActivity extends AppCompatActivity {
                     }
                 } else {
                     classId = reference.push().getKey();
-                    reference.child(classId).child("test").setValue("test");
+                    reference.child(classId).child("test").setValue("outer if");
                 }
             }
 
@@ -160,11 +160,12 @@ public class ChooseNicknameActivity extends AppCompatActivity {
         });
     }
 
-    private void addToClassStrength() {
+    private void addToClassStrength(String classId) {
         Info info = new Info();
         info.setId(Controller.CurrentUser.getUID());
         DatabaseReference reference = FirebaseDatabase.getInstance()
-                .getReference("Class_Chat_Groups").child("strength");
+                .getReference("Class_Chat_Groups")
+                .child(classId).child("strength");
         String id = reference.push().getKey();
         reference.child(id)
                 .setValue(info);

@@ -12,10 +12,13 @@ import com.thisischool.chool.Models.WorkBook;
 import java.util.List;
 
 @Dao
-public interface MyDao {
+public interface NotesDao {
 
     @Query("SELECT * FROM work_book")
     LiveData<List<WorkBook>> getAllWorkBook();
+
+    @Query("SELECT * FROM work_book WHERE favorite = :isFav")
+    LiveData<List<WorkBook>> getFavWorkBook(boolean isFav); // always pass true for it.
 
     @Insert
     void insertWorkBook(WorkBook workBook);

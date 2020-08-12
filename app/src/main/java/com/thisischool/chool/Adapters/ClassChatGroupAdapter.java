@@ -23,11 +23,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.thisischool.chool.Activities.ClassChatRepliesActivity;
 import com.thisischool.chool.Activities.PrivateChatActivity;
 import com.thisischool.chool.BuildConfig;
 import com.thisischool.chool.Classes.AppHelper;
+import com.thisischool.chool.Classes.Constants;
 import com.thisischool.chool.Classes.Controller;
 import com.thisischool.chool.Models.FriendRequest;
+import com.thisischool.chool.Models.Replies;
 import com.thisischool.chool.OnlineDatabase.MyReferences;
 import com.thisischool.chool.OnlineDatabase.SendNotification;
 import com.thisischool.chool.Models.ClassChatGroupMessage;
@@ -73,6 +76,11 @@ public class ClassChatGroupAdapter extends RecyclerView.Adapter<ClassChatGroupAd
             holder.message.setText(message.getMessage());
             holder.count.setText(String.valueOf(message.getMessageLikes()));
 
+            holder.replies.setOnClickListener(view1 -> {
+                context.startActivity(new Intent(context, ClassChatRepliesActivity.class)
+                        .putExtra(Constants.REPLIES_KEY,message.getMessageId()));
+            });
+
             if (!message.getPostImageUrl().equals(NO_IMAGE)) {
                 holder.image.setVisibility(View.VISIBLE);
                 holder.image.setOnClickListener(v -> {
@@ -104,6 +112,7 @@ public class ClassChatGroupAdapter extends RecyclerView.Adapter<ClassChatGroupAd
 
             numberOfLikes(message.getMessageId(), holder.count);
             isLiked(message.getMessageId(), holder.like);
+            getRepliesCount(message,holder.replies);
         }
     }
 
@@ -333,7 +342,7 @@ public class ClassChatGroupAdapter extends RecyclerView.Adapter<ClassChatGroupAd
 
     static class ClassChatGroupHolder extends RecyclerView.ViewHolder {
 
-        TextView nickname, message, count, line;
+        TextView nickname, message, count, line, replies;
         ImageView image, like;
 
         public ClassChatGroupHolder(@NonNull View itemView) {
@@ -344,7 +353,34 @@ public class ClassChatGroupAdapter extends RecyclerView.Adapter<ClassChatGroupAd
             image = itemView.findViewById(R.id.message_img_row);
             like = itemView.findViewById(R.id.messageLike_row);
             line = itemView.findViewById(R.id.line_row);
+            replies = itemView.findViewById(R.id.rep_class);
         }
+    }
+
+    private void getRepliesCount(@NotNull ClassChatGroupMessage message, TextView view) {
+       Query query = MyReferences.classGroupReplies(context)
+               .orderByChild("messageId").equalTo(message.getMessageId());
+       query.addValueEventListener(new ValueEventListener() {
+           @Override
+           public void onDataChange(@NonNull DataSnapshot snapshot) {
+               if (snapshot.exists()) {
+                   int count = (int) snapshot.getChildrenCount();
+                       view.setVisibility(View.VISIBLE);
+                       if (count == 1) {
+                           view.setText(count + " Reply");
+                       } else if (count == 0){
+                           view.setText("Reply ->");
+                       } else {
+                           view.setText(count + " Replies");
+                       }
+               }
+           }
+
+           @Override
+           public void onCancelled(@NonNull DatabaseError error) {
+
+           }
+       });
     }
 
 }

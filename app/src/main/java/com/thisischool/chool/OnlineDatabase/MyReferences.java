@@ -30,6 +30,7 @@ public class MyReferences {
     private static final String NOTES = "notes";
     private static final String QUESTIONS = "questions";
     private static final String ANSWERS = "answers";
+    private static final String REPLIES = "replies";
 
 
 
@@ -54,6 +55,12 @@ public class MyReferences {
     public static DatabaseReference classGroupAnswers(Context context) {
         return FirebaseDatabase.getInstance().getReference(CLASS_CHAT_GROUP_DB)
                 .child(Controller.CurrentUser.getUserClassId(context)).child(ANSWERS);
+    }
+
+    @NotNull
+    public static DatabaseReference classGroupReplies(Context context) {
+        return FirebaseDatabase.getInstance().getReference(CLASS_CHAT_GROUP_DB)
+                .child(Controller.CurrentUser.getUserClassId(context)).child(REPLIES);
     }
 
     @NotNull
